@@ -100,34 +100,26 @@ function renderBoard() {
     const index = cell.dataset.index;
     const row = Math.floor(index / boardSize);
     const col = index % boardSize;
-    const existingPiece = cell.querySelector('img') || cell.querySelector('.circle');
 
-    if (!board[row][col]) {
-      cell.innerHTML = '';
-      if (useIcons) {
-        const weaponImg = document.createElement('img');
-        weaponImg.src = currentPlayer === 'usa' ? getRandomWeapon(usaWeapons) : getRandomWeapon(chinaWeapons);
-        cell.appendChild(weaponImg);
-      } else {
-        const circle = document.createElement('div');
-        circle.classList.add('circle');
-        circle.classList.add(currentPlayer === 'usa' ? 'usa-circle' : 'china-circle');
-        cell.appendChild(circle);
-      }
-    } else if (!existingPiece) {
-      // Insert the existing piece (if any) only if the cell is empty
-      if (board[row][col] === 'usa') {
-        const weaponImg = document.createElement('img');
-        weaponImg.src = usaWeapons[0]; // Example: Use the first weapon image for USA
-        cell.appendChild(weaponImg);
-      } else if (board[row][col] === 'china') {
-        const weaponImg = document.createElement('img');
-        weaponImg.src = chinaWeapons[0]; // Example: Use the first weapon image for China
-        cell.appendChild(weaponImg);
+    // Check if there's already a piece in the cell
+    if (!cell.firstChild) {
+      const piece = board[row][col];
+      if (piece === 'usa' || piece === 'china') {
+        if (useIcons) {
+          const weaponImg = document.createElement('img');
+          weaponImg.src = piece === 'usa' ? getRandomWeapon(usaWeapons) : getRandomWeapon(chinaWeapons);
+          cell.appendChild(weaponImg);
+        } else {
+          const circle = document.createElement('div');
+          circle.classList.add('circle');
+          circle.classList.add(piece === 'usa' ? 'usa-circle' : 'china-circle');
+          cell.appendChild(circle);
+        }
       }
     }
   });
 }
+
 
 toggleStyleButton.addEventListener('click', () => {
   useIcons = !useIcons;
