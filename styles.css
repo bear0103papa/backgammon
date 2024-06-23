@@ -12,6 +12,16 @@ body {
   text-align: center;
 }
 
+#description {
+  margin-bottom: 20px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+
 #board {
   display: grid;
   grid-template-columns: repeat(15, 40px);
@@ -32,12 +42,26 @@ body {
   cursor: pointer;
 }
 
-.cell img {
+.cell img, .cell .circle {
   width: 100%;
   height: 100%;
 }
 
-#restart {
+.circle {
+  border-radius: 50%;
+  width: 80%;
+  height: 80%;
+}
+
+.usa-circle {
+  background-color: blue;
+}
+
+.china-circle {
+  background-color: red;
+}
+
+#restart, #toggleStyle {
   margin-top: 20px;
   padding: 10px 20px;
   font-size: 16px;
