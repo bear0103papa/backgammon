@@ -93,6 +93,7 @@ function checkDirection(row, col, xDir, yDir) {
   }
   return count === winCondition;
 }
+
 function renderBoard() {
   const cells = boardElement.querySelectorAll('.cell');
   cells.forEach(cell => {
@@ -100,38 +101,34 @@ function renderBoard() {
     const row = Math.floor(index / boardSize);
     const col = index % boardSize;
 
-    // Check if there's already a piece in the cell
-    if (!board[row][col]) {
-      cell.innerHTML = '';
-      return;
-    }
+    // Clear cell content
+    cell.innerHTML = '';
 
-    // Check if there's already a piece rendered in the cell
-    if (cell.firstChild) {
-      return;
-    }
-
-    const piece = board[row][col];
-    if (useIcons) {
-      const weaponImg = document.createElement('img');
-      weaponImg.src = piece === 'usa' ? getRandomWeapon(usaWeapons) : getRandomWeapon(chinaWeapons);
-      cell.appendChild(weaponImg);
-    } else {
-      const circle = document.createElement('div');
-      circle.classList.add('circle');
-      circle.classList.add(piece === 'usa' ? 'usa-circle' : 'china-circle');
-      cell.appendChild(circle);
+    // Render piece if exists
+    if (board[row][col]) {
+      if (useIcons) {
+        const weaponImg = document.createElement('img');
+        weaponImg.src = board[row][col] === 'usa' ? getRandomWeapon(usaWeapons) : getRandomWeapon(chinaWeapons);
+        weaponImg.classList.add('piece-icon');
+        cell.appendChild(weaponImg);
+      } else {
+        const circle = document.createElement('div');
+        circle.classList.add('circle');
+        circle.classList.add(board[row][col] === 'usa' ? 'usa-circle' : 'china-circle');
+        cell.appendChild(circle);
+      }
     }
   });
 }
-
-
 
 toggleStyleButton.addEventListener('click', () => {
   useIcons = !useIcons;
   renderBoard();
 });
 
-restartButton.addEventListener('click', initBoard);
+restartButton.addEventListener('click', () => {
+  initBoard();
+  currentPlayer = 'usa';
+});
 
 initBoard();
