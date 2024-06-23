@@ -70,6 +70,14 @@ body {
   border-radius: 50%;
 }
 
+.usa-circle {
+  background-color: blue;
+}
+
+.china-circle {
+  background-color: red;
+}
+
 /* 重新開始和切換顯示按鈕樣式 */
 #restart, #toggleStyle {
   margin-top: 20px;
