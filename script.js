@@ -94,22 +94,18 @@ function checkDirection(row, col, xDir, yDir) {
   return count === winCondition;
 }
 
+
 function renderBoard() {
   const cells = boardElement.querySelectorAll('.cell');
   cells.forEach(cell => {
     const index = cell.dataset.index;
     const row = Math.floor(index / boardSize);
     const col = index % boardSize;
-
-    // Clear cell content
     cell.innerHTML = '';
-
-    // Render piece if exists
     if (board[row][col]) {
       if (useIcons) {
         const weaponImg = document.createElement('img');
         weaponImg.src = board[row][col] === 'usa' ? getRandomWeapon(usaWeapons) : getRandomWeapon(chinaWeapons);
-        weaponImg.classList.add('piece-icon');
         cell.appendChild(weaponImg);
       } else {
         const circle = document.createElement('div');
