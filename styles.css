@@ -13,12 +13,19 @@ body {
 }
 
 #description {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 5px;
 }
 
+.player-info {
+  display: flex;
+  align-items: center;
+}
+
 .icon {
-  width: 5x;
-  height: 5px;
+  width: 25px; /* Reduce icon size by 50% */
+  height: 25px;
   vertical-align: middle;
 }
 
