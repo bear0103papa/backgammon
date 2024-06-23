@@ -2,8 +2,10 @@ const boardSize = 15;
 const winCondition = 5;
 let board = [];
 let currentPlayer = 'usa';
+let useIcons = true;
 const boardElement = document.getElementById('board');
 const restartButton = document.getElementById('restart');
+const toggleStyleButton = document.getElementById('toggleStyle');
 
 const usaWeapons = [
   'usa_weapon1.png',
@@ -40,15 +42,8 @@ function handleCellClick(event) {
 
   if (board[row][col] || checkWin()) return;
 
-  const weaponImg = document.createElement('img');
-  if (currentPlayer === 'usa') {
-    weaponImg.src = getRandomWeapon(usaWeapons);
-  } else {
-    weaponImg.src = getRandomWeapon(chinaWeapons);
-  }
-
   board[row][col] = currentPlayer;
-  event.target.appendChild(weaponImg);
+  renderBoard();
 
   if (checkWin()) {
     setTimeout(() => alert(`${currentPlayer.toUpperCase()}贏了！`), 100);
@@ -98,6 +93,33 @@ function checkDirection(row, col, xDir, yDir) {
   }
   return count === winCondition;
 }
+
+function renderBoard() {
+  const cells = boardElement.querySelectorAll('.cell');
+  cells.forEach(cell => {
+    const index = cell.dataset.index;
+    const row = Math.floor(index / boardSize);
+    const col = index % boardSize;
+    cell.innerHTML = '';
+    if (board[row][col]) {
+      if (useIcons) {
+        const weaponImg = document.createElement('img');
+        weaponImg.src = board[row][col] === 'usa' ? getRandomWeapon(usaWeapons) : getRandomWeapon(chinaWeapons);
+        cell.appendChild(weaponImg);
+      } else {
+        const circle = document.createElement('div');
+        circle.classList.add('circle');
+        circle.classList.add(board[row][col] === 'usa' ? 'usa-circle' : 'china-circle');
+        cell.appendChild(circle);
+      }
+    }
+  });
+}
+
+toggleStyleButton.addEventListener('click', () => {
+  useIcons = !useIcons;
+  renderBoard();
+});
 
 restartButton.addEventListener('click', initBoard);
 
