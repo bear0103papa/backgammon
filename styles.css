@@ -1,3 +1,4 @@
+/* 基本的樣式 */
 body {
   display: flex;
   justify-content: center;
@@ -12,10 +13,13 @@ body {
   text-align: center;
 }
 
+/* 玩家信息排版 */
 #description {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* 調整為垂直排列 */
+  margin-bottom: 10px;
 }
 
 .player-info {
@@ -23,24 +27,29 @@ body {
   align-items: center;
 }
 
+/* 調整圖示大小和位置 */
 .icon {
-  width: 25px; /* Reduce icon size by 50% */
+  width: 25px;
   height: 25px;
   vertical-align: middle;
 }
 
+/* 棋盤排版 */
 #board {
   display: grid;
-  grid-template-columns: repeat(15, 40px);
-  grid-template-rows: repeat(15, 40px);
+  grid-template-columns: repeat(15, 3vw); /* 使用 vw 單位來隨螢幕調整大小 */
+  grid-template-rows: repeat(15, 3vw);
   gap: 1px;
   margin: 20px auto;
+  max-width: 90vw; /* 設定最大寬度 */
+  max-height: 90vw; /* 設定最大高度 */
   border: 2px solid #333;
 }
 
+/* 棋盤格子樣式 */
 .cell {
-  width: 40px;
-  height: 40px;
+  width: 100%;
+  height: 100%;
   background-color: #fff;
   border: 1px solid #ccc;
   display: flex;
@@ -49,28 +58,30 @@ body {
   cursor: pointer;
 }
 
+/* 圖片和圓形樣式 */
 .cell img, .cell .circle {
-  width: 100%;
-  height: 100%;
-}
-
-.circle {
-  border-radius: 50%;
   width: 80%;
   height: 80%;
+  object-fit: contain; /* 保持圖片比例 */
 }
 
-.usa-circle {
-  background-color: blue;
+/* 圓形樣式 */
+.circle {
+  border-radius: 50%;
 }
 
-.china-circle {
-  background-color: red;
-}
-
+/* 重新開始和切換顯示按鈕樣式 */
 #restart, #toggleStyle {
   margin-top: 20px;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
+}
+
+/* 媒體查詢：當螢幕寬度小於 600px 時，棋盤格子大小自動調整 */
+@media (max-width: 600px) {
+  #board {
+    grid-template-columns: repeat(15, 5vw);
+    grid-template-rows: repeat(15, 5vw);
+  }
 }
