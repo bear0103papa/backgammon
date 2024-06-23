@@ -1,9 +1,25 @@
 const boardSize = 15;
 const winCondition = 5;
 let board = [];
-let currentPlayer = 'x';
+let currentPlayer = 'usa';
 const boardElement = document.getElementById('board');
 const restartButton = document.getElementById('restart');
+
+const usaWeapons = [
+  'usa_weapon1.png',
+  'usa_weapon2.png',
+  'usa_weapon3.png',
+  'usa_weapon4.png',
+  'usa_weapon5.png'
+];
+
+const chinaWeapons = [
+  'china_weapon1.png',
+  'china_weapon2.png',
+  'china_weapon3.png',
+  'china_weapon4.png',
+  'china_weapon5.png'
+];
 
 function initBoard() {
   board = Array(boardSize).fill(null).map(() => Array(boardSize).fill(null));
@@ -24,15 +40,27 @@ function handleCellClick(event) {
 
   if (board[row][col] || checkWin()) return;
 
+  const weaponImg = document.createElement('img');
+  if (currentPlayer === 'usa') {
+    weaponImg.src = getRandomWeapon(usaWeapons);
+  } else {
+    weaponImg.src = getRandomWeapon(chinaWeapons);
+  }
+
   board[row][col] = currentPlayer;
-  event.target.classList.add(currentPlayer);
+  event.target.appendChild(weaponImg);
 
   if (checkWin()) {
     setTimeout(() => alert(`${currentPlayer.toUpperCase()}贏了！`), 100);
     return;
   }
 
-  currentPlayer = currentPlayer === 'x' ? 'o' : 'x';
+  currentPlayer = currentPlayer === 'usa' ? 'china' : 'usa';
+}
+
+function getRandomWeapon(weapons) {
+  const index = Math.floor(Math.random() * weapons.length);
+  return weapons[index];
 }
 
 function checkWin() {
