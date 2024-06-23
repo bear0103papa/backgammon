@@ -29,18 +29,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 24px;
   cursor: pointer;
 }
 
-.cell.x::before {
-  content: 'X';
-  color: blue;
-}
-
-.cell.o::before {
-  content: 'O';
-  color: red;
+.cell img {
+  width: 100%;
+  height: 100%;
 }
 
 #restart {
