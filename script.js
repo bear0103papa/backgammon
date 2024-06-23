@@ -93,7 +93,6 @@ function checkDirection(row, col, xDir, yDir) {
   }
   return count === winCondition;
 }
-
 function renderBoard() {
   const cells = boardElement.querySelectorAll('.cell');
   cells.forEach(cell => {
@@ -102,23 +101,30 @@ function renderBoard() {
     const col = index % boardSize;
 
     // Check if there's already a piece in the cell
-    if (!cell.firstChild) {
-      const piece = board[row][col];
-      if (piece === 'usa' || piece === 'china') {
-        if (useIcons) {
-          const weaponImg = document.createElement('img');
-          weaponImg.src = piece === 'usa' ? getRandomWeapon(usaWeapons) : getRandomWeapon(chinaWeapons);
-          cell.appendChild(weaponImg);
-        } else {
-          const circle = document.createElement('div');
-          circle.classList.add('circle');
-          circle.classList.add(piece === 'usa' ? 'usa-circle' : 'china-circle');
-          cell.appendChild(circle);
-        }
-      }
+    if (!board[row][col]) {
+      cell.innerHTML = '';
+      return;
+    }
+
+    // Check if there's already a piece rendered in the cell
+    if (cell.firstChild) {
+      return;
+    }
+
+    const piece = board[row][col];
+    if (useIcons) {
+      const weaponImg = document.createElement('img');
+      weaponImg.src = piece === 'usa' ? getRandomWeapon(usaWeapons) : getRandomWeapon(chinaWeapons);
+      cell.appendChild(weaponImg);
+    } else {
+      const circle = document.createElement('div');
+      circle.classList.add('circle');
+      circle.classList.add(piece === 'usa' ? 'usa-circle' : 'china-circle');
+      cell.appendChild(circle);
     }
   });
 }
+
 
 
 toggleStyleButton.addEventListener('click', () => {
